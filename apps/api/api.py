@@ -24,6 +24,7 @@ from apps.api.routers.inbox import router as inbox_router
 from apps.api.routers.me import router as me_router
 from apps.api.routers.media import router as media_router
 from apps.api.routers.posts import router as posts_router
+from apps.common.branding import get_brand
 from apps.mcp.transport import router as mcp_router
 
 
@@ -36,12 +37,12 @@ class NoncedSwagger(Swagger):
 
 
 api = NinjaAPI(
-    title="Brightbean Agent API",
+    title=f"{get_brand()['product_name']} Agent API",
     version="1.0.0",
     description=(
         "Programmatic access for external AI agents. Authentication is via "
-        "scoped bearer tokens; create one from the Organization → API Keys "
-        "page in the Brightbean Studio settings.\n\n"
+        "scoped bearer tokens; create one from the Organization -> API Keys "
+        f"page in the {get_brand()['product_name']} settings.\n\n"
         "**User-Agent.** Send a `User-Agent` header naming your client "
         "(e.g. `my-agent/1.0`). The hosted Studio sits behind Cloudflare, "
         "which rejects Python's standard-library default "

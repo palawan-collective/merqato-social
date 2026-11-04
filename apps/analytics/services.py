@@ -18,6 +18,7 @@ from django.db import connections
 from django.utils import timezone
 from django.utils.text import get_text_list
 
+from apps.common.branding import get_brand
 from apps.composer.models import PlatformPost
 from apps.social_accounts.models import SocialAccount
 
@@ -458,7 +459,8 @@ def calculated_metrics_note(
     calculated.append("% changes vs. the previous period")
     listed = get_text_list(calculated, "and")
     return (
-        f"Underlying data comes from {platform}. The {listed} are calculated by BrightBean, not reported by {platform}."
+        f"Underlying data comes from {platform}. The {listed} are calculated by "
+        f"{get_brand()['product_name']}, not reported by {platform}."
     )
 
 

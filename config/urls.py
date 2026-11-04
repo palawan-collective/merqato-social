@@ -5,6 +5,7 @@ from urllib.parse import urlsplit
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.views.generic import TemplateView
 from django.views.static import serve
 
 from apps.accounts.views import health_check
@@ -16,6 +17,11 @@ logger = logging.getLogger(__name__)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("health/", health_check, name="health_check"),
+    path(
+        "legal/",
+        TemplateView.as_view(template_name="legal/index.html"),
+        name="legal",
+    ),
     path("accounts/", include("apps.accounts.urls")),
     path("accounts/", include("allauth.urls")),
     path("organizations/", include("apps.organizations.urls")),

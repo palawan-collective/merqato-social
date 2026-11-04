@@ -24,6 +24,7 @@ from django.utils.html import strip_tags
 from django.utils.text import get_text_list
 from django.views.decorators.http import require_GET, require_POST
 
+from apps.common.branding import get_brand
 from apps.common.validators import (
     is_safe_url,
     parse_and_truncate_tag_string,
@@ -4009,7 +4010,7 @@ def _fetch_feed_events_for_workspace(feeds):
 
     headers = {
         "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
-        "User-Agent": "Brightbean RSS Reader/1.0",
+        "User-Agent": f"{get_brand()['product_name']} RSS Reader/1.0",
     }
     all_events = []
     for feed in feeds:
@@ -4113,7 +4114,7 @@ def _validate_rss_url(rss_url):
     """Validate that a URL points to a reachable RSS/Atom XML feed."""
     headers = {
         "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
-        "User-Agent": "Brightbean RSS Validator/1.0",
+        "User-Agent": f"{get_brand()['product_name']} RSS Validator/1.0",
     }
     response, _final_url = _safe_fetch_feed(rss_url, headers)
     if response is None:

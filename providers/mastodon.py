@@ -11,6 +11,8 @@ from datetime import datetime
 from functools import partial
 from urllib.parse import urlencode
 
+from apps.common.branding import get_brand
+
 from .base import SocialProvider
 from .exceptions import APIError, OAuthError, PublishError
 from .types import (
@@ -149,10 +151,10 @@ class MastodonProvider(SocialProvider):
             "POST",
             url,
             json={
-                "client_name": "Brightbean",
+                "client_name": get_brand()["product_name"],
                 "redirect_uris": redirect_uri,
                 "scopes": " ".join(self.required_scopes),
-                "website": "https://brightbean.xyz",
+                "website": get_brand()["company_url"],
             },
         )
         data = resp.json()

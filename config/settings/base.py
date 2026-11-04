@@ -113,6 +113,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.notifications.context_processors.unread_notification_count",
+                "apps.common.branding.brand_context",
                 "apps.common.context_processors.sidebar_context",
                 "apps.onboarding.context_processors.onboarding_checklist",
                 "apps.intelligence.context_processors.intelligence_flag",
@@ -684,7 +685,7 @@ MCP_PUBLIC_BASE_URL = env("MCP_PUBLIC_BASE_URL", default=APP_URL).rstrip("/")
 MCP_OAUTH_ISSUER_URL = env("MCP_OAUTH_ISSUER_URL", default=APP_URL).rstrip("/")
 
 OAUTH2_PROVIDER = {
-    "SCOPES": {"mcp": "Call BrightBean Studio MCP tools on your behalf"},
+    "SCOPES": {"mcp": f"Call {env('BRAND_PRODUCT_NAME', default='MerQato Social')} MCP tools on your behalf"},
     "DEFAULT_SCOPES": ["mcp"],
     "PKCE_REQUIRED": True,
     # Restrict ``code_challenge_method`` to ``S256``. django-oauth-toolkit
@@ -765,3 +766,56 @@ if INTELLIGENCE_ENABLED:
                 f"localhost / 127.0.0.1 dev tunnels) — current value would "
                 f"leak Intelligence API keys in transit."
             )
+
+# ---------------------------------------------------------------------------
+# White-label branding
+# ---------------------------------------------------------------------------
+# Everything customer-facing that names the product lives here. Templates read
+# it through apps.common.branding.brand_context, so re-branding a deployment is
+# an environment change rather than a find-and-replace. Technical identifiers
+# (package names, the database name, docker tags, the X-Brightbean-Email-Class
+# header) are deliberately unchanged.
+#
+# The colour values mirror the Layer-1 brand tokens in
+# theme/static_src/src/styles.css; the CSS is the rendering source of truth and
+# these are the record of what it is set to.
+BRAND = {
+    "product_name": env("BRAND_PRODUCT_NAME", default="MerQato Social"),
+    "short_name": env("BRAND_SHORT_NAME", default="MerQato"),
+    "company_name": env("BRAND_COMPANY_NAME", default="Palawan Collective"),
+    "company_url": env("BRAND_COMPANY_URL", default="https://merqato.digital"),
+    "domain": env("BRAND_DOMAIN", default="social.merqato.digital"),
+    "support_email": env("BRAND_SUPPORT_EMAIL", default="growpalawan@gmail.com"),
+    "tagline": env(
+        "BRAND_TAGLINE",
+        default="Social media scheduling & approvals",
+    ),
+    "logo": env("BRAND_LOGO", default="img/merqato-social-logo.png"),
+    "logo_mark": env("BRAND_LOGO_MARK", default="img/merqato-mark.png"),
+    "favicon_dir": env("BRAND_FAVICON_DIR", default="favicon"),
+    "legal_url": env("BRAND_LEGAL_URL", default="/legal/"),
+    "terms_url": env("BRAND_TERMS_URL", default="/legal/#terms"),
+    "privacy_url": env("BRAND_PRIVACY_URL", default="/legal/#privacy"),
+    "upstream_name": env("BRAND_UPSTREAM_NAME", default="BrightBean Studio"),
+    "upstream_url": env(
+        "BRAND_UPSTREAM_URL",
+        default="https://github.com/brightbeanxyz/brightbean-studio",
+    ),
+    "license_name": env("BRAND_LICENSE_NAME", default="AGPL-3.0"),
+    "colors": {
+        "brand_50": env("BRAND_COLOR_50", default="#F3F5FF"),
+        "brand_100": env("BRAND_COLOR_100", default="#E7EBFF"),
+        "brand_200": env("BRAND_COLOR_200", default="#D0D8FF"),
+        "brand_300": env("BRAND_COLOR_300", default="#AFBCFF"),
+        "brand_400": env("BRAND_COLOR_400", default="#8C9BFA"),
+        "brand_500": env("BRAND_COLOR_500", default="#6675EE"),
+        "brand_600": env("BRAND_COLOR_600", default="#4F5CD8"),
+        "brand_700": env("BRAND_COLOR_700", default="#3F49AE"),
+        "brand_800": env("BRAND_COLOR_800", default="#363E8C"),
+        "brand_900": env("BRAND_COLOR_900", default="#2E3473"),
+        "brand_green_100": env("BRAND_COLOR_GREEN_100", default="#E4FAF3"),
+        "brand_green_200": env("BRAND_COLOR_GREEN_200", default="#BFEFE0"),
+        "brand_green_500": env("BRAND_COLOR_GREEN_500", default="#4FC9A6"),
+        "brand_green_600": env("BRAND_COLOR_GREEN_600", default="#34A98A"),
+    },
+}

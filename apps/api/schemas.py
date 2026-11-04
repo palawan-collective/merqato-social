@@ -490,7 +490,7 @@ class DerivedMetricResponse(Schema):
     delta: float = Field(
         ...,
         description=(
-            "Percent change vs. the previous equal-length window, calculated by BrightBean. "
+            "Percent change vs. the previous equal-length window, calculated by the platform integration. "
             "``0.0`` when there is no prior baseline."
         ),
     )
@@ -504,16 +504,16 @@ class DerivedMetricResponse(Schema):
     calculated_by_brightbean: bool = Field(
         False,
         description=(
-            "``true`` when BrightBean calculated ``value`` rather than the platform reporting it: the "
+            "``true`` when the value was calculated here rather than reported by the platform: the "
             "engagement rate, daily averages, and estimates on supported platforms. "
             "Disclosure does not permit prohibited derived metrics. YouTube values are native reports."
         ),
     )
-    averaged: bool = Field(False, description="``value`` is BrightBean's average of the platform's daily figures.")
+    averaged: bool = Field(False, description="``value`` is our average of the platform's daily figures.")
     estimated: bool = Field(
         False,
         description=(
-            "``value`` was estimated by BrightBean from other counts — summed per-post deltas when the "
+            "``value`` was estimated from other counts — summed per-post deltas when the "
             "platform's account-level analytics weren't available or were older, or differences between "
             "follower totals."
         ),
@@ -544,7 +544,7 @@ class EngagementCardResponse(Schema):
     rate: DerivedMetricResponse = Field(
         ...,
         description=(
-            "Engagement rate = sum(parts) / denom * 100, calculated by BrightBean. The denom is the "
+            "Engagement rate = sum(parts) / denom * 100, calculated here. The denom is the "
             "first of ``views, reach, impressions, plays`` with data, falling back to the follower count."
         ),
     )

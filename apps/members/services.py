@@ -9,6 +9,7 @@ from django.db.models import F, Q
 from django.template.loader import render_to_string
 from django.utils import timezone
 
+from apps.common.branding import get_brand
 from apps.common.mail import EmailNotSentError, send_or_raise, transactional
 from apps.workspaces.models import Workspace
 
@@ -558,9 +559,10 @@ def _send_invite_email(invitation) -> bool:
         "org_name": invitation.organization.name,
         "invited_by": invitation.invited_by,
         "app_url": app_url,
+        "brand": get_brand(),
     }
 
-    subject = f"You've been invited to join {invitation.organization.name} on Brightbean"
+    subject = f"You've been invited to join {invitation.organization.name} on {get_brand()['product_name']}"
     text_content = render_to_string("members/email/invite.txt", context)
     html_content = render_to_string("members/email/invite.html", context)
 

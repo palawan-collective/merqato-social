@@ -1,0 +1,109 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal &amp; about - {{ brand.product_name }}</title>
+    <link rel="icon" href="{% static 'favicon/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{% static 'favicon/favicon.svg' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <style>
+        :root {
+            --ink: #1C1917; --muted: #57534E; --line: #E7E5E4;
+            --surface: #FFFFFF; --page: #F7F6F2; --brand: #6675EE;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--page); color: var(--ink);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.65;
+        }
+        main { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+        header { display: flex; align-items: center; gap: .75rem; margin-bottom: 2rem; }
+        header img { width: 40px; height: 40px; object-fit: contain; }
+        header .name { font-weight: 700; font-size: 1.0625rem; }
+        .eyebrow {
+            display: block; font-size: .6875rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: .12em; color: var(--brand);
+        }
+        h1 { font-size: 1.75rem; margin: 0 0 1.5rem; letter-spacing: -.01em; }
+        h2 { font-size: 1.125rem; margin: 2.25rem 0 .5rem; }
+        p, li { color: var(--muted); font-size: .9375rem; }
+        a { color: var(--brand); }
+        .card {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: 1rem; padding: 1.75rem 1.75rem 2rem;
+        }
+        footer { margin-top: 2rem; font-size: .8125rem; color: var(--muted); }
+        code { font-size: .875em; }
+    </style>
+</head>
+<body>
+<main>
+    <header>
+        <img src="{% static brand.logo %}" alt="{{ brand.product_name }}">
+        <div>
+            <span class="eyebrow">{{ brand.company_name }}</span>
+            <span class="name">{{ brand.product_name }}</span>
+        </div>
+    </header>
+
+    <div class="card">
+        <h1>About, terms, privacy and licensing</h1>
+
+        <p>
+            {{ brand.product_name }} is operated by {{ brand.company_name }}
+            (<a href="{{ brand.company_url }}" rel="noopener">{{ brand.company_url }}</a>) at
+            {{ brand.domain }}. It is a workspace for planning, scheduling and approving
+            social media posts across connected channels.
+        </p>
+        <p>
+            Questions, data requests or anything else: email
+            <a href="mailto:{{ brand.support_email }}">{{ brand.support_email }}</a>.
+        </p>
+
+        <h2 id="terms">Terms of Service</h2>
+        <p>
+            Access is provided to invited users and their workspaces. You are responsible for
+            the content you create and publish through the service, and for keeping your
+            credentials secure. Connected social accounts remain subject to the terms of the
+            platform they belong to. The service is provided as-is, without warranty, and may be
+            changed or withdrawn. Use it only for content you have the right to publish.
+        </p>
+
+        <h2 id="privacy">Privacy Policy</h2>
+        <p>
+            We store what the service needs to work: your account details, the social accounts you
+            connect, the posts and media you create, and the metrics those platforms report back.
+            We do not sell personal data. Access tokens for connected accounts are encrypted at
+            rest. Deleting a post, a channel or your account removes the associated records, except
+            where a platform still holds the content you published. To request an export or
+            deletion of your data, email
+            <a href="mailto:{{ brand.support_email }}">{{ brand.support_email }}</a>.
+        </p>
+
+        <h2>Licensing and attribution</h2>
+        <p>
+            {{ brand.product_name }} is a modified distribution of
+            <a href="{{ brand.upstream_url }}" rel="noopener">{{ brand.upstream_name }}</a>,
+            licensed under the <strong>GNU Affero General Public License, version 3</strong>
+            (<code>{{ brand.license_name }}</code>). The full licence text ships with the
+            application in the <code>LICENSE</code> file.
+        </p>
+        <p>
+            Because the AGPL requires that users interacting with this service over a network can
+            obtain the corresponding source, the complete source for this deployment is available
+            on request at
+            <a href="mailto:{{ brand.support_email }}">{{ brand.support_email }}</a>, and from the
+            upstream project linked above. Copyright in the original work remains with its
+            authors; this deployment's modifications are likewise released under the AGPL-3.0.
+        </p>
+    </div>
+
+    <footer>
+        &copy; {{ brand.company_name }}. {{ brand.product_name }} is built on
+        {{ brand.upstream_name }}, licensed {{ brand.license_name }}.
+    </footer>
+</main>
+</body>
+</html>

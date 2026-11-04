@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 
 from apps.accounts.models import OAuthConnection
 from apps.accounts.signup_links import custom_signup_url, mark_invite_lapsed, signup_allowed
+from apps.common.branding import get_brand
 from apps.common.mail import transactional
 
 
@@ -102,6 +103,11 @@ class AccountAdapter(DefaultAccountAdapter):
         )
 
     def render_mail(self, template_prefix, email, context, headers=None):
+        # Brand values are not otherwise reachable from these templates: allauth
+        # renders them with render_to_string and a hand-built context, so no
+        # context processor runs. Injecting here covers every allauth email at
+        # once, subject lines included.
+        context = {**context, "brand": get_brand()}
         if "signup_url" in context:
             request = context.get("request")
             custom = custom_signup_url(request)
