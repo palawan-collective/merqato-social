@@ -44,8 +44,8 @@
         </div>
         {% endif %}
 
-        <!-- Social Login -->
-        {% if SOCIALACCOUNT_ENABLED %}
+        <!-- Social login hidden until Google sign-in is configured. To restore it, change the condition below back to SOCIALACCOUNT_ENABLED. -->
+        {% if False %}
             {% get_providers as socialaccount_providers %}
             {% if socialaccount_providers %}
                 <div class="space-y-3 mb-6">
